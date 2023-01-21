@@ -11,8 +11,11 @@ class MyApp extends StatelessWidget {
   //you dont need this body
   //  this.text = text;
   //}
-
+  var qIndex = 0;
   //MyApp({this.text});
+  void answerQuestion() {
+    qIndex += 1;
+  }
 
   //this class can now be used as a widget
   //each widget needs a build method with context argument
@@ -33,26 +36,28 @@ class MyApp extends StatelessWidget {
           ),
           body: Column(
             children: [
-              Text("The question!"),
+              Text(questions[qIndex]),
               ElevatedButton(
                 child: Text("Answer 1"),
-                onPressed: null,
+                onPressed: answerQuestion,
               ),
               ElevatedButton(
-                child: Text("Answer 1"),
-                onPressed: null,
+                child: Text("Answer 2"),
+                onPressed: () => qIndex += 1,
               ),
               ElevatedButton(
-                child: Text("Answer 1"),
-                onPressed: null,
+                child: Text("Answer 3"),
+                onPressed: () {
+                  qIndex += 1;
+                },
               ),
               ElevatedButton(
-                child: Text("Answer 1"),
-                onPressed: null,
+                child: Text("Answer 4"),
+                onPressed: answerQuestion,
               ),
               ElevatedButton(
-                child: Text("Answer 1"),
-                onPressed: null,
+                child: Text("Answer 5"),
+                onPressed: answerQuestion,
               ),
             ],
           )),
