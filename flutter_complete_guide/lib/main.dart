@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './question.dart';
+
 // void main() {
 //   runApp(MyApp(text: "test"));
 // }
@@ -9,21 +11,22 @@ void main() => runApp(MyApp());
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return _MyAppState();
   }
 }
 
-class MyAppState extends State<MyApp> {
+//_ is special syntax in dart, it turns a class into a private class
+class _MyAppState extends State<MyApp> {
   //MyApp({@required String text}) {
   //you dont need this body
   //  this.text = text;
   //}
-  var qIndex = 0;
+  var _qIndex = 0;
   //MyApp({this.text});
   void answerQuestion() {
-    if (qIndex < 4) {
+    if (_qIndex < 4) {
       setState(() {
-        qIndex += 1;
+        _qIndex += 1;
       });
     }
   }
@@ -47,7 +50,7 @@ class MyAppState extends State<MyApp> {
           ),
           body: Column(
             children: [
-              Text(questions[qIndex]),
+              Question(questions[_qIndex]),
               ElevatedButton(
                 child: Text("Answer 1"),
                 onPressed: answerQuestion,
