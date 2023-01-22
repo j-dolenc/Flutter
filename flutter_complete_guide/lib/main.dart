@@ -6,7 +6,14 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return MyAppState();
+  }
+}
+
+class MyAppState extends State<MyApp> {
   //MyApp({@required String text}) {
   //you dont need this body
   //  this.text = text;
@@ -14,7 +21,11 @@ class MyApp extends StatelessWidget {
   var qIndex = 0;
   //MyApp({this.text});
   void answerQuestion() {
-    qIndex += 1;
+    if (qIndex < 4) {
+      setState(() {
+        qIndex += 1;
+      });
+    }
   }
 
   //this class can now be used as a widget
@@ -43,13 +54,11 @@ class MyApp extends StatelessWidget {
               ),
               ElevatedButton(
                 child: Text("Answer 2"),
-                onPressed: () => qIndex += 1,
+                onPressed: answerQuestion,
               ),
               ElevatedButton(
                 child: Text("Answer 3"),
-                onPressed: () {
-                  qIndex += 1;
-                },
+                onPressed: answerQuestion,
               ),
               ElevatedButton(
                 child: Text("Answer 4"),
