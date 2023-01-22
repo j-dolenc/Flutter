@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './answer.dart';
 import './question.dart';
 
 // void main() {
@@ -23,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   //}
   var _qIndex = 0;
   //MyApp({this.text});
-  void answerQuestion() {
+  void _answerQuestion() {
     if (_qIndex < 4) {
       setState(() {
         _qIndex += 1;
@@ -51,26 +52,9 @@ class _MyAppState extends State<MyApp> {
           body: Column(
             children: [
               Question(questions[_qIndex]),
-              ElevatedButton(
-                child: Text("Answer 1"),
-                onPressed: answerQuestion,
-              ),
-              ElevatedButton(
-                child: Text("Answer 2"),
-                onPressed: answerQuestion,
-              ),
-              ElevatedButton(
-                child: Text("Answer 3"),
-                onPressed: answerQuestion,
-              ),
-              ElevatedButton(
-                child: Text("Answer 4"),
-                onPressed: answerQuestion,
-              ),
-              ElevatedButton(
-                child: Text("Answer 5"),
-                onPressed: answerQuestion,
-              ),
+              Answer(_answerQuestion),
+              Answer(_answerQuestion),
+              Answer(_answerQuestion),
             ],
           )),
     );
