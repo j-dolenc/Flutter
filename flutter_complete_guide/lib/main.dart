@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import './quiz.dart';
 import './answer.dart';
 import './question.dart';
-
+import './result.dart';
 // void main() {
 //   runApp(MyApp(text: "test"));
 // }
@@ -23,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   //  this.text = text;
   //}
 
-  final questions = const [
+  final _questions = const [
     //you can add const before the value as well
     //to make it really clear this is compile time constant and runtime constant. Final is only runtime constant.
     {
@@ -53,7 +54,7 @@ class _MyAppState extends State<MyApp> {
   void _answerQuestion() {
     //Boolean? statement = _qIndex < questions.length; //this also works
     //statement = null; //with the ? you can set it to null, it is either its value type or null.
-    if (_qIndex < questions.length) {
+    if (_qIndex < _questions.length) {
       setState(() {
         _qIndex += 1;
       });
@@ -74,21 +75,13 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text("My First App"),
         ),
-        body: _qIndex < questions.length
-            ? Column(
-                children: [
-                  Question(
-                    questions[_qIndex]["questiontext"] as String,
-                  ),
-                  ...(questions[_qIndex]["answers"] as List<String>)
-                      .map((answer) {
-                    return Answer(_answerQuestion, answer);
-                  }).toList() //is .toList() actually needed?
-                ],
+        body: _qIndex < _questions.length
+            ? Quiz(
+                answerQuestion: _answerQuestion,
+                questions: _questions,
+                qIndex: _qIndex,
               )
-            : Center(
-                child: Text("You did it"),
-              ),
+            : Result(),
       ),
     );
   }
