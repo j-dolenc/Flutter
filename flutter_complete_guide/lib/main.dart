@@ -22,10 +22,38 @@ class _MyAppState extends State<MyApp> {
   //you dont need this body
   //  this.text = text;
   //}
+
+  final questions = const [
+    //you can add const before the value as well
+    //to make it really clear this is compile time constant and runtime constant. Final is only runtime constant.
+    {
+      "questiontext": "What is your favorite hobby?",
+      "answers": ["Sports", "Music", "Studying", "Dying"]
+    },
+    {
+      "questiontext": "What is your favorite book?",
+      "answers": ["kekec", "Bela Smrt", " Peter Klepec", "Janez in Petra"]
+    },
+    {
+      "questiontext": "What is your favorite movie?",
+      "answers": ["Peter Klepec", "Kekec 1", "Kekec 2", "Kekec 3"]
+    },
+    {
+      "questiontext": "What is your favorite food?",
+      "answers": ["Lasagna", "Pizza", "Salad"]
+    },
+    {
+      "questiontext": "What is your favorite place you have ever visited?",
+      "answers": ["Home", "School", "Hell", "Heaven", "Your mom"]
+    },
+  ];
+
   var _qIndex = 0;
   //MyApp({this.text});
   void _answerQuestion() {
-    if (_qIndex < 4) {
+    //Boolean? statement = _qIndex < questions.length; //this also works
+    //statement = null; //with the ? you can set it to null, it is either its value type or null.
+    if (_qIndex < questions.length) {
       setState(() {
         _qIndex += 1;
       });
@@ -36,31 +64,6 @@ class _MyAppState extends State<MyApp> {
   //each widget needs a build method with context argument
   @override //technically it is not required, it is a decorator and is provided by Flutter, it is common practice to write it so the code is more readable.
   Widget build(BuildContext context) {
-    const questions = [
-      //you can add const before the value as well
-      //to make it really clear this is compile time constant and runtime constant. Final is only runtime constant.
-      {
-        "questiontext": "What is your favorite hobby?",
-        "answers": ["Sports", "Music", "Studying", "Dying"]
-      },
-      {
-        "questiontext": "What is your favorite book?",
-        "answers": ["kekec", "Bela Smrt", " Peter Klepec", "Janez in Petra"]
-      },
-      {
-        "questiontext": "What is your favorite movie?",
-        "answers": ["Peter Klepec", "Kekec 1", "Kekec 2", "Kekec 3"]
-      },
-      {
-        "questiontext": "What is your favorite food?",
-        "answers": ["Lasagna", "Pizza", "Salad"]
-      },
-      {
-        "questiontext": "What is your favorite place you have ever visited?",
-        "answers": ["Home", "School", "Hell", "Heaven", "Your mom"]
-      },
-    ];
-
     //var dummy = const ['Hey'];
     //dummy.add("Jurij");
     //print(dummy); //you ojnly get an error after compiling your code
@@ -71,14 +74,21 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text("My First App"),
         ),
-        body: Column(
-          children: [
-            Question(questions[_qIndex]["questiontext"] as String),
-            ...(questions[_qIndex]["answers"] as List<String>).map((answer) {
-              return Answer(_answerQuestion, answer);
-            })
-          ],
-        ),
+        body: _qIndex < questions.length
+            ? Column(
+                children: [
+                  Question(
+                    questions[_qIndex]["questiontext"] as String,
+                  ),
+                  ...(questions[_qIndex]["answers"] as List<String>)
+                      .map((answer) {
+                    return Answer(_answerQuestion, answer);
+                  }).toList() //is .toList() actually needed?
+                ],
+              )
+            : Center(
+                child: Text("You did it"),
+              ),
       ),
     );
   }
