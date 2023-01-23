@@ -36,7 +36,9 @@ class _MyAppState extends State<MyApp> {
   //each widget needs a build method with context argument
   @override //technically it is not required, it is a decorator and is provided by Flutter, it is common practice to write it so the code is more readable.
   Widget build(BuildContext context) {
-    var questions = [
+    const questions = [
+      //you can add const before the value as well
+      //to make it really clear this is compile time constant and runtime constant. Final is only runtime constant.
       {
         "questiontext": "What is your favorite hobby?",
         "answers": ["Sports", "Music", "Studying", "Dying"]
@@ -58,20 +60,26 @@ class _MyAppState extends State<MyApp> {
         "answers": ["Home", "School", "Hell", "Heaven", "Your mom"]
       },
     ];
+
+    //var dummy = const ['Hey'];
+    //dummy.add("Jurij");
+    //print(dummy); //you ojnly get an error after compiling your code
+
     //home: the widget for the default route of the app "/"
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: Text("My First App"),
-          ),
-          body: Column(
-            children: [
-              Question(questions[_qIndex]["questiontext"] as String),
-              ...(questions[_qIndex]["answers"] as List<String>).map((answer) {
-                return Answer(_answerQuestion, answer);
-              })
-            ],
-          )),
+        appBar: AppBar(
+          title: Text("My First App"),
+        ),
+        body: Column(
+          children: [
+            Question(questions[_qIndex]["questiontext"] as String),
+            ...(questions[_qIndex]["answers"] as List<String>).map((answer) {
+              return Answer(_answerQuestion, answer);
+            })
+          ],
+        ),
+      ),
     );
   }
 }
