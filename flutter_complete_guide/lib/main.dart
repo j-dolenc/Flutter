@@ -29,35 +29,62 @@ class _MyAppState extends State<MyApp> {
     //to make it really clear this is compile time constant and runtime constant. Final is only runtime constant.
     {
       "questiontext": "What is your favorite hobby?",
-      "answers": ["Sports", "Music", "Studying", "Dying"]
+      "answers": [
+        {'text': "Sports", "score": 3},
+        {'text': "Music", "score": 5},
+        {'text': "Studying", "score": 8},
+        {'text': "Dying", "score": 10},
+      ]
     },
     {
       "questiontext": "What is your favorite book?",
-      "answers": ["kekec", "Bela Smrt", " Peter Klepec", "Janez in Petra"]
+      "answers": [
+        {'text': "Kekec", "score": 2},
+        {'text': "Bela Smrt", "score": 8},
+        {'text': " Peter Klepec", "score": 5},
+        {'text': "Janez in Petra", "score": 10},
+      ]
     },
     {
       "questiontext": "What is your favorite movie?",
-      "answers": ["Peter Klepec", "Kekec 1", "Kekec 2", "Kekec 3"]
+      "answers": [
+        {'text': "Peter Klepec", "score": 1},
+        {'text': "Kekec 1", "score": 3},
+        {'text': "Kekec 2", "score": 6},
+        {'text': "Kekec 3", "score": 9},
+      ]
     },
     {
       "questiontext": "What is your favorite food?",
-      "answers": ["Lasagna", "Pizza", "Salad"]
+      "answers": [
+        {'text': "Lasagna", "score": 1},
+        {'text': "Pizza", "score": 5},
+        {'text': "Salad", "score": 10},
+      ]
     },
     {
       "questiontext": "What is your favorite place you have ever visited?",
-      "answers": ["Home", "School", "Hell", "Heaven", "Your mom"]
+      "answers": [
+        {'text': "Home", "score": 4},
+        {'text': "School", "score": 6},
+        {'text': "Hell", "score": 10},
+        {'text': "Heaven", "score": 8},
+        {'text': "Your mom", "score": 1},
+      ]
     },
   ];
 
   var _qIndex = 0;
+  var _totalScore = 0;
   //MyApp({this.text});
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
     //Boolean? statement = _qIndex < questions.length; //this also works
     //statement = null; //with the ? you can set it to null, it is either its value type or null.
     if (_qIndex < _questions.length) {
       setState(() {
         _qIndex += 1;
       });
+      _totalScore += score;
     }
   }
 
@@ -81,7 +108,7 @@ class _MyAppState extends State<MyApp> {
                 questions: _questions,
                 qIndex: _qIndex,
               )
-            : Result(),
+            : Result(_totalScore),
       ),
     );
   }
