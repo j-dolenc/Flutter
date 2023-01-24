@@ -83,9 +83,16 @@ class _MyAppState extends State<MyApp> {
     if (_qIndex < _questions.length) {
       setState(() {
         _qIndex += 1;
+        _totalScore += score;
       });
-      _totalScore += score;
     }
+  }
+
+  void _resetQuiz() {
+    setState(() {
+      _qIndex = 0;
+      _totalScore = 0;
+    });
   }
 
   //this class can now be used as a widget
@@ -108,7 +115,7 @@ class _MyAppState extends State<MyApp> {
                 questions: _questions,
                 qIndex: _qIndex,
               )
-            : Result(_totalScore),
+            : Result(_totalScore, _resetQuiz),
       ),
     );
   }
