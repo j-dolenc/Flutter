@@ -47,9 +47,30 @@ class MyHomePage extends StatelessWidget {
             ),
             width: double.infinity,
           ),
-          Card(
-            child: Text("LIST OF TRANSACTIONS!"),
-            color: Colors.blueGrey,
+          Column(
+            children: transactions.map((ts) {
+              return Card(
+                child: Row(
+                  children: [
+                    Container(
+                      child: Text(
+                        ts.amount.toString(),
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          ts.title,
+                        ),
+                        Text(
+                          ts.date.toIso8601String(),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              );
+            }).toList(),
           ),
         ],
       ),
