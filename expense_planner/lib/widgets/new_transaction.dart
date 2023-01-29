@@ -7,6 +7,18 @@ class NewTransaction extends StatelessWidget {
 
   NewTransaction(this.addNewTrans);
 
+  void submitData() {
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0) return;
+
+    addNewTrans(
+      enteredTitle,
+      enteredAmount,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -21,18 +33,19 @@ class NewTransaction extends StatelessWidget {
               //   titleInput = input;
               // },
               controller: titleController,
+              onSubmitted: (_) => submitData(),
+              //it just need a string as an argument even if we don't use it
             ), //for receiving text input
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submitData(),
               // onChanged: (input) => amountInput = input,
             ),
             TextButton(
               child: Text("Add Transaction"),
-              onPressed: () {
-                addNewTrans(
-                    titleController.text, double.parse(amountController.text));
-              },
+              onPressed: submitData,
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(
                     Color.fromARGB(255, 75, 163, 207)),
