@@ -18,6 +18,8 @@ class MyApp extends StatelessWidget {
               primary: Colors.teal,
               secondary: Color.fromARGB(255, 202, 153, 5),
             ),
+        fontFamily: 'Quicksand',
+        //appBarTheme: AppBarTheme(...) you can use some of this but some is deprecated
         //primarySwatch: Colors.teal,
         //accentColor: Colors.amber, //use colorscheme instead...
       ),
@@ -42,18 +44,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final List<Transaction> _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.42,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Groceries',
-      amount: 114.20,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: 't1',
+    //   title: 'New Shoes',
+    //   amount: 69.42,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'Groceries',
+    //   amount: 114.20,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   void _addNewTransaction(String title, double amount) {
@@ -72,7 +74,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter App'),
+        toolbarTextStyle:
+            TextStyle(fontFamily: 'OpenSans', fontWeight: FontWeight.bold),
+        title: Text(
+          'Personal Expenses',
+        ),
         actions: [
           IconButton(
             onPressed: () => _startAddTs(context),
