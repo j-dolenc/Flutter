@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import './widgets/user_transactions.dart';
+
+import './widgets/new_transaction.dart';
+import './models/transaction.dart';
+import './widgets/transaction_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,11 +16,48 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   //String titleInput;
-  //String amountInput;
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+
+  void _startAddTs(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return NewTransaction(_addNewTransaction);
+        });
+  }
+
+  final List<Transaction> _transactions = [
+    Transaction(
+      id: 't1',
+      title: 'New Shoes',
+      amount: 69.42,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Groceries',
+      amount: 114.20,
+      date: DateTime.now(),
+    ),
+  ];
+
+  void _addNewTransaction(String title, double amount) {
+    final newTs = Transaction(
+      id: DateTime.now().toString(),
+      title: title,
+      amount: amount,
+      date: DateTime.now(),
+    );
+    setState(() {
+      _transactions.add(newTs);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +66,7 @@ class MyHomePage extends StatelessWidget {
         title: Text('Flutter App'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => _startAddTs(context),
             icon: Icon(Icons.add),
           )
         ],
@@ -44,14 +84,14 @@ class MyHomePage extends StatelessWidget {
               ),
               width: double.infinity,
             ),
-            UserTransactions(),
+            TransactionList(_transactions),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () => _startAddTs(context),
       ),
     );
   }
