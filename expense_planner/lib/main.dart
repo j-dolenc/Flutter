@@ -10,8 +10,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter App',
+      title: 'Personal Expenses',
       home: MyHomePage(),
+      //theme: ThemeData.dark(),
+      theme: ThemeData(
+        colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: Colors.teal,
+              secondary: Color.fromARGB(255, 202, 153, 5),
+            ),
+        //primarySwatch: Colors.teal,
+        //accentColor: Colors.amber, //use colorscheme instead...
+      ),
     );
   }
 }
