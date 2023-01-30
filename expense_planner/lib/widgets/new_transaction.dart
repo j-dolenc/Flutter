@@ -32,13 +32,17 @@ class _NewTransactionState extends State<NewTransaction> {
 
   void _submitData() {
     final enteredTitle = _titleController.text;
-    final enteredAmount = null;
+    final enteredAmount = double.parse(_amountController.text);
 
-    if (enteredTitle.isEmpty || enteredAmount <= 0) return;
-
+    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
+      //print(_selectedDate.toString());
+      return;
+    }
+    print(_selectedDate.toString());
     widget.addNewTrans(
       enteredTitle,
       enteredAmount,
+      _selectedDate,
     );
 
     Navigator.of(context).pop(); //close the top most screen that is displayed
