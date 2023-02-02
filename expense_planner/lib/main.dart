@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter/services.dart';
 import './models/transaction.dart';
@@ -15,21 +18,35 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Personal Expenses',
-      home: MyHomePage(),
-      //theme: ThemeData.dark(),
-      theme: ThemeData(
-        colorScheme: Theme.of(context).colorScheme.copyWith(
-              primary: Colors.teal,
-              secondary: Color.fromARGB(255, 202, 153, 5),
+    return Platform.isIOS
+        ? CupertinoApp(
+            title: 'Personal Expenses',
+            home: MyHomePage(),
+            //theme: ThemeData.dark(),
+            theme: CupertinoThemeData(
+              primaryColor: Colors.teal,
+              primaryContrastingColor: Color.fromARGB(255, 202, 153, 5),
+
+              //appBarTheme: AppBarTheme(...) you can use some of this but some is deprecated
+              //primarySwatch: Colors.teal,
+              //accentColor: Colors.amber, //use colorscheme instead...
             ),
-        fontFamily: 'Quicksand',
-        //appBarTheme: AppBarTheme(...) you can use some of this but some is deprecated
-        //primarySwatch: Colors.teal,
-        //accentColor: Colors.amber, //use colorscheme instead...
-      ),
-    );
+          )
+        : MaterialApp(
+            title: 'Personal Expenses',
+            home: MyHomePage(),
+            //theme: ThemeData.dark(),
+            theme: ThemeData(
+              colorScheme: Theme.of(context).colorScheme.copyWith(
+                    primary: Colors.teal,
+                    secondary: Color.fromARGB(255, 202, 153, 5),
+                  ),
+              fontFamily: 'Quicksand',
+              //appBarTheme: AppBarTheme(...) you can use some of this but some is deprecated
+              //primarySwatch: Colors.teal,
+              //accentColor: Colors.amber, //use colorscheme instead...
+            ),
+          );
   }
 }
 
@@ -91,19 +108,29 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final appBar = AppBar(
-      toolbarTextStyle:
-          TextStyle(fontFamily: 'OpenSans', fontWeight: FontWeight.bold),
-      title: Text(
-        'Personal Expenses',
-      ),
-      actions: [
-        IconButton(
-          onPressed: () => _startAddTs(context),
-          icon: Icon(Icons.add),
-        )
-      ],
-    );
+    final PreferredSizeWidget appBar = Platform.isIOS
+        ? CupertinoNavigationBar(
+            middle: Text("Personal Expenses"),
+            trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+              GestureDetector(
+                onTap: () => _startAddTs(context),
+                child: Icon(CupertinoIcons.add),
+              )
+            ]),
+          )
+        : AppBar(
+            toolbarTextStyle:
+                TextStyle(fontFamily: 'OpenSans', fontWeight: FontWeight.bold),
+            title: Text(
+              'Personal Expenses',
+            ),
+            actions: [
+              IconButton(
+                onPressed: () => _startAddTs(context),
+                icon: Icon(Icons.add),
+              )
+            ],
+          );
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
@@ -113,9 +140,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 MediaQuery.of(context).padding.top) *
             0.7,
         child: TransactionList(_transactions, _deleteTs));
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
+    final bodyWidget = SafeArea(
+      child: SingleChildScrollView(
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -125,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Show chart"),
-                  Switch(
+                  Switch.adaptive(
                       value: _showChart,
                       onChanged: (val) {
                         setState(() {
@@ -154,11 +180,23 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _startAddTs(context),
-      ),
     );
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            child: bodyWidget,
+            navigationBar: appBar,
+          )
+        : Scaffold(
+            appBar: appBar,
+            body: bodyWidget,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
+                    child: Icon(Icons.add),
+                    onPressed: () => _startAddTs(context),
+                  ),
+          );
   }
 }
