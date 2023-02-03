@@ -7,16 +7,46 @@ import 'package:intl/intl.dart';
 class NewTransaction extends StatefulWidget {
   final Function addNewTrans;
 
-  NewTransaction(this.addNewTrans);
+  NewTransaction(this.addNewTrans) {
+    // print("const new trans");
+  }
 
   @override
-  State<NewTransaction> createState() => _NewTransactionState();
+  State<NewTransaction> createState() {
+    // print("createState trans widget");
+    return _NewTransactionState();
+  }
 }
 
 class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime _selectedDate;
+
+  _NewTransactionState() {
+    // print("new trans state constructor");
+  }
+  // @override
+  // void initState() {
+  //   print("initstate()");
+  //   //super is a key word that refers to the parent class
+  //   super.initState();
+  // }
+
+  // @override
+  // void didUpdateWidget(covariant NewTransaction oldWidget) {
+  //   print("updated widget :)");
+  //   //you get the old widget so you can compare it to the new one :flushed:
+
+  //   super.didUpdateWidget(oldWidget);
+  // }
+
+  // @override
+  // void dispose() {
+  //   print("dispose()");
+  //   super.dispose();
+  // }
+
   void _presentDatePicker() {
     showDatePicker(
             context: context,
