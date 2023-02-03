@@ -145,10 +145,8 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final PreferredSizeWidget appBar = Platform.isIOS
+  Widget _buildAppBar() {
+    return Platform.isIOS
         ? CupertinoNavigationBar(
             middle: Text("Personal Expenses"),
             trailing: Row(mainAxisSize: MainAxisSize.min, children: [
@@ -171,6 +169,12 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ],
           );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final PreferredSizeWidget appBar = _buildAppBar();
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
