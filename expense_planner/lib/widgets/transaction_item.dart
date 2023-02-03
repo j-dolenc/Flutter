@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 import 'package:intl/intl.dart';
+import 'dart:math';
 
-class TransactionItem extends StatelessWidget {
+class TransactionItem extends StatefulWidget {
   const TransactionItem({
     Key key,
     @required this.transaction,
@@ -11,6 +12,26 @@ class TransactionItem extends StatelessWidget {
 
   final Transaction transaction;
   final Function deleteTs;
+
+  @override
+  State<TransactionItem> createState() => _TransactionItemState();
+}
+
+class _TransactionItemState extends State<TransactionItem> {
+  Color _bgColor;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    const availableColors = [
+      Colors.red,
+      Colors.amber,
+      Colors.blue,
+      Colors.green
+    ];
+
+    _bgColor = availableColors[Random().nextInt(4)];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +43,13 @@ class TransactionItem extends StatelessWidget {
       elevation: 1,
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: _bgColor,
           radius: 30,
           child: Padding(
             padding: const EdgeInsets.all(7),
             child: FittedBox(
               child: Text(
-                '€${transaction.amount}',
+                '€${widget.transaction.amount}',
                 style:
                     TextStyle(color: Theme.of(context).colorScheme.secondary),
               ),
@@ -36,26 +57,27 @@ class TransactionItem extends StatelessWidget {
           ),
         ),
         title: Text(
-          transaction.title,
+          widget.transaction.title,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
         ),
-        subtitle: Text(DateFormat('dd-MM-yyyy').format(transaction.date)),
+        subtitle:
+            Text(DateFormat('dd-MM-yyyy').format(widget.transaction.date)),
         trailing: MediaQuery.of(context).size.width > 400
             ? TextButton.icon(
                 style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all(
                         Theme.of(context).errorColor)),
-                onPressed: () => deleteTs(transaction.id),
+                onPressed: () => widget.deleteTs(widget.transaction.id),
                 icon: Icon(Icons.delete),
                 label: Text("Delete"),
               )
             : IconButton(
                 icon: Icon(Icons.delete),
                 color: Theme.of(context).errorColor,
-                onPressed: () => deleteTs(transaction.id),
+                onPressed: () => widget.deleteTs(widget.transaction.id),
               ),
       ),
     );
