@@ -55,7 +55,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   //String titleInput;
 
   void _startAddTs(BuildContext context) {
@@ -64,6 +64,27 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (_) {
           return NewTransaction(_addNewTransaction);
         });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  //we can use this because we used the mixin with "WITH"
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    print(state);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
   }
 
   final List<Transaction> _transactions = [
