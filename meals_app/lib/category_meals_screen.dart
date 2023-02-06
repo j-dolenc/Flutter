@@ -1,18 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class CategoryMealsScreen extends StatelessWidget {
-  const CategoryMealsScreen({Key key}) : super(key: key);
+  final String categoryId;
+  final String categoryTitle;
+  const CategoryMealsScreen(this.categoryId, this.categoryTitle);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "The recipes",
+          categoryTitle,
         ),
       ),
       body: Center(
